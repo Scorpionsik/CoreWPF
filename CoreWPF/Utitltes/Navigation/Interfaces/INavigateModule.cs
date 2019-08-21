@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CoreWPF.Utitltes.Navigation.Interfaces
+﻿namespace CoreWPF.Utitltes.Navigation.Interfaces
 {
     public interface INavigateModule
     {

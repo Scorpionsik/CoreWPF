@@ -7,9 +7,15 @@ using System.Windows.Threading;
 
 namespace CoreWPF.Utitltes.Navigation
 {
+    /// <summary>
+    /// Предоставляет инструменты для переключения нескольких ViewModel в одном окне.
+    /// <para>Начало работы: Сначала требуется создать экземпляр текущего менеджера и передать в конструкторе <see cref="Dispatcher"/> и <see cref="ContentControl"/> окна, в котором будут меняться ViewModel. 
+    /// Далее регистрируются ViewModel (в который передается ссылка на текущий менеджер), View и ключ, по которому можно будет найти ViewModel в коллекции менеджера. Рекомендуется отдельно хранить список ключей, по которым можно обратиться к тому или иному ViewModel.
+    /// После чего менеджер передается в конструкторе ViewModel основного окна.</para>
+    /// </summary>
     public class NavigationManager
     {
-        #region Fields
+        #region Поля и свойства
         private event Action<INavigateModule> navigation_invoke;
         public Action<INavigateModule> Navigation_invoke
         {
@@ -27,8 +33,7 @@ namespace CoreWPF.Utitltes.Navigation
 
         #endregion
 
-        #region Ctor
-
+        #region Конструкторы
         public NavigationManager(Dispatcher dispatcher, ContentControl frameControl)
         {
             if (dispatcher == null)
@@ -39,9 +44,9 @@ namespace CoreWPF.Utitltes.Navigation
             _dispatcher = dispatcher;
             _frameControl = frameControl;
         }
-
         #endregion
 
+        #region Методы
         public void Register<TViewModel, TView>(TViewModel viewModel, string navigationKey)
             where TViewModel : class
             where TView : FrameworkElement
@@ -115,5 +120,6 @@ namespace CoreWPF.Utitltes.Navigation
 
             navigationAware.OnNavigatingTo(arg);
         }
+        #endregion
     }
 }

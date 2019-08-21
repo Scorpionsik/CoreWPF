@@ -3,7 +3,7 @@ using CoreWPF.Utitltes.Navigation.Interfaces;
 
 namespace CoreWPF.Utitltes.Navigation
 {
-    public abstract partial class NavigationModel : Model, INavigateModule
+    public abstract partial class NavigationModel : SimpleModel, INavigateModule
     {
         public NavigationManager Navigator { get; private set; }
         public string Subtitle { get; private set; }
