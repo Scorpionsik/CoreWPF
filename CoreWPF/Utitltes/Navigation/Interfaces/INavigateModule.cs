@@ -1,4 +1,4 @@
-﻿namespace CoreWPF.Utitltes.Navigation.Interfaces
+﻿namespace CoreWPF.Utilites.Navigation.Interfaces
 {
     public interface INavigateModule
     {

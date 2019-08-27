@@ -1,32 +1,50 @@
-﻿using CoreWPF.MVVM.Interfaces;
+﻿using CoreWPF.Utilites;
+using System;
+using System.Linq;
 
 namespace CoreWPF.MVVM
 {
-    /// <summary>
-    /// Реализует интерфейс <see cref="IModel"/>, базовый вариант
-    /// </summary>
-    public abstract partial class Model : SimpleModel, IModel
+    [Serializable]
+    public abstract partial class Model : NotifyPropertyChanged
     {
-        #region Методы
+        #region Поля и свойства
         /// <summary>
-        /// Создает копию данной модели
+        /// Событие выбора данной модели
         /// </summary>
-        /// <returns>Возвращает копию модели</returns>
-        public abstract IModel Clone();
+        [field: NonSerialized]
+        private event Action<Model> event_select_model;
+        /// <summary>
+        /// Событие выбора данной модели
+        /// </summary>
+        public event Action<Model> Event_select_model
+        {
+            add { this.event_select_model += value; }
+            remove { this.event_select_model -= value; }
+        } //---свойство Event_select_model
 
         /// <summary>
-        /// Сравнивает две модели
+        /// Возвращает имя класса текущей модели
         /// </summary>
-        /// <param name="model">Принимает IModel для сравнения</param>
-        /// <returns>Возвращает true, если модели равны</returns>
-        public abstract bool Equals(IModel model);
-
-        /// <summary>
-        /// Обновляет текущую модель переданной
-        /// </summary>
-        /// <param name="model">Принимает модель, которой будет обновлена текущая модель</param>
-        public abstract void Merge(IModel model);
+        public string ClassName
+        {
+            get { return this.GetType().ToString().Split('.').Last(); }
+        } //---свойство ClassName
         #endregion
-    } //---класс Model
-} //---пространство имён CoreWPF.MVVM
-//---EOF
+
+        #region Команды
+        /// <summary>
+        /// Команда, вызывающее событие выбора данной модели
+        /// </summary>
+        public virtual RelayCommand Command_select_model
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    this.event_select_model?.Invoke(this);
+                });
+            }
+        } //---команда Command_select_model
+        #endregion
+    }
+}

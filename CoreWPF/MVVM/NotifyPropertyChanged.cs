@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace CoreWPF.MVVM
@@ -6,11 +7,13 @@ namespace CoreWPF.MVVM
     /// <summary>
     /// Реализует интерфейс <see cref="INotifyPropertyChanged"/>
     /// </summary>
+    [Serializable]
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {
-        // <summary>
+        /// <summary>
         /// Событие для обновления привязанного объекта (в XAML)
         /// </summary>
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// Метод для обновления выбранного привязанного объекта (в XAML)

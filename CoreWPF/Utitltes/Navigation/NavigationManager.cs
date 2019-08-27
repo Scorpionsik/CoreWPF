@@ -1,11 +1,11 @@
-﻿using CoreWPF.Utitltes.Navigation.Interfaces;
+﻿using CoreWPF.Utilites.Navigation.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace CoreWPF.Utitltes.Navigation
+namespace CoreWPF.Utilites.Navigation
 {
     /// <summary>
     /// Предоставляет инструменты для переключения нескольких ViewModel в одном окне.

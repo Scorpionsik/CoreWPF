@@ -1,5 +1,5 @@
 ﻿using CoreWPF.MVVM.Interfaces;
-using CoreWPF.Utitltes;
+using CoreWPF.Utilites;
 using System.Collections.Generic;
 
 namespace CoreWPF.MVVM.Utilites
@@ -53,6 +53,26 @@ namespace CoreWPF.MVVM.Utilites
             }
             return false;
         } //---метод Contains
+
+        public void Merge(T model)
+        {
+            foreach (T merge in this)
+            {
+                if (merge.Equals(model))
+                {
+                    merge.Merge(model);
+                    break;
+                }
+            }
+        }
+
+        public void Merge(IEnumerable<T> models)
+        {
+            foreach(T merge in models)
+            {
+                this.Merge(merge);
+            }
+        }
 
         /// <summary>
         /// Создает копию текущей коллекции

@@ -46,9 +46,8 @@
   <ItemGroup>
     <Compile Include="Interfaces\IIdentify.cs" />
     <Compile Include="MVVM\Interfaces\IModel.cs" />
-    <Compile Include="MVVM\Model.cs" />
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
-    <Compile Include="MVVM\SimpleModel.cs" />
+    <Compile Include="MVVM\Model.cs" />
     <Compile Include="MVVM\Utilites\ListModel.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

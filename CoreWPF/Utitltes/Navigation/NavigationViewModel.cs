@@ -1,8 +1,8 @@
 ﻿using CoreWPF.MVVM;
-using CoreWPF.Utitltes.Navigation.Interfaces;
+using CoreWPF.Utilites.Navigation.Interfaces;
 using System;
 
-namespace CoreWPF.Utitltes.Navigation
+namespace CoreWPF.Utilites.Navigation
 {
     public abstract partial class NavigationViewModel : ViewModel
     {

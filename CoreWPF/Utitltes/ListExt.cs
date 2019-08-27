@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace CoreWPF.Utitltes
+namespace CoreWPF.Utilites
 {
     /// <summary>
     /// Наследуется от <see cref="ObservableCollection{T}"/>, расширяя функционал
