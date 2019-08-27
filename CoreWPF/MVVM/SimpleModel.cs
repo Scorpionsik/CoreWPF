@@ -11,13 +11,10 @@ namespace CoreWPF.MVVM
         /// <summary>
         /// Событие выбора данной модели
         /// </summary>
-        public Action<SimpleModel> Event_select_model
+        public event Action<SimpleModel> Event_select_model
         {
-            get { return this.event_select_model; }
-            set
-            {
-                this.event_select_model = new Action<SimpleModel>(value);
-            }
+            add { this.event_select_model += value; }
+            remove { this.event_select_model -= value; }
         } //---свойство Event_select_model
 
         /// <summary>
@@ -30,7 +27,6 @@ namespace CoreWPF.MVVM
         #endregion
 
         #region Команды
-        private RelayCommand command_select_model;
         /// <summary>
         /// Команда, вызывающее событие выбора данной модели
         /// </summary>
@@ -38,10 +34,10 @@ namespace CoreWPF.MVVM
         {
             get
             {
-                return this.command_select_model ?? (this.command_select_model = new RelayCommand(obj =>
+                return new RelayCommand(obj =>
                 {
-                    this.Event_select_model?.Invoke(this);
-                }));
+                    this.event_select_model?.Invoke(this);
+                });
             }
         } //---команда Command_select_model
         #endregion
