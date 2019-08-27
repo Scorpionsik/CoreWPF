@@ -52,7 +52,7 @@
     <Compile Include="MVVM\Utilites\ListModel.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utitltes\Event\EventManager.cs" />
+    <Compile Include="Utitltes\Event\EventMaker.cs" />
     <Compile Include="Utitltes\Event\EventUnit.cs" />
     <Compile Include="Utitltes\ListExt.cs" />
     <Compile Include="Utitltes\Navigation\Interfaces\INavigateModule.cs" />
