@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -10,6 +11,30 @@ namespace CoreWPF.Utilites
     /// <typeparam name="T">Принимает любой <see cref="object"/></typeparam>
     public partial class ListExt<T> : ObservableCollection<T>
     {
+        #region Свойства
+        /// <summary>
+        /// Возвращает первый элемент последовательности
+        /// </summary>
+        public T First
+        {
+            get
+            {
+                return this.First();
+            }
+        } //---свойтсво First
+
+        /// <summary>
+        /// Возвращает последний элемент последовательности
+        /// </summary>
+        public T Last
+        {
+            get
+            {
+                return this.Last();
+            }
+        } //---свойство Last
+        #endregion
+
         #region Констукторы
         /// <summary>
         /// Конструктор
@@ -51,6 +76,60 @@ namespace CoreWPF.Utilites
         } //---метод InsertRange
 
         /// <summary>
+        /// Возвращает первый элемент последовательности, удовлетворяющий указанному условию
+        /// </summary>
+        /// <param name="predicate">Функция для проверки каждого элемента на соответствие условию</param>
+        public T FindFirst(Func<T,bool> predicate)
+        {
+            return this.First(predicate);
+        } //---метод FindFirst
+
+        /// <summary>
+        /// Возвращает последний элемент последовательности, удовлетворяющий указанному условию
+        /// </summary>
+        /// <param name="predicate">Функция для проверки каждого элемента на соответствие условию</param>
+        public T FindLast(Func<T, bool> predicate)
+        {
+            return this.Last(predicate);
+        } //---метод FindLast
+
+        public static ListExt<T> FindRange(IEnumerable<T> collection, Func<T, bool> predicate)
+        {
+            ListExt<T> tmp_send = new ListExt<T>();
+
+            foreach(T model in collection)
+            {
+                if (predicate(model)) tmp_send.Add(model);
+            }
+
+            return tmp_send;
+        }
+
+        public ListExt<T> FindRange(Func<T, bool> predicate)
+        {
+            return FindRange(this, predicate);
+        }
+
+        public ListExt<T> Shuffle()
+        {
+            int[] tmp_index = new int[this.Count];
+            ListExt<T> tmp_shuffle = new ListExt<T>();
+            for (int i = 0; i < this.Count; i++)
+            {
+                tmp_index[i] = i;
+            }
+
+            for(int index = 0, step = tmp_index.Length; index < tmp_index.Length; index++, step--)
+            {
+                int tmp_rand = new Random().Next(step);
+                tmp_shuffle.Insert(0, this[tmp_index[tmp_rand]]);
+                tmp_index[tmp_rand] = tmp_index[step - 1];
+            }
+            
+            return tmp_shuffle;
+        }
+
+        /// <summary>
         /// Удаляет из данного массива элементы коллекции; сравнивает объекты массива и коллекции как критерий
         /// </summary>
         /// <param name="collection">Принимает коллекцию элементов для удаления</param>
@@ -74,13 +153,13 @@ namespace CoreWPF.Utilites
         /// </summary>
         /// <param name="collection">Принимает коллекцию</param>
         /// <returns>Возвращает инвертированную коллекцию</returns>
-        public static T[] Inverse(IEnumerable<T> collection)
+        public static ListExt<T> Inverse(IEnumerable<T> collection)
         {
-            T[] tmp_send = new T[collection.Count()];
+            ListExt<T> tmp_send = new ListExt<T>();
 
-            for (int i = collection.Count() - 1, j = 0; i >= 0; i--, j++)
+            for (int i = collection.Count() - 1; i >= 0; i--)
             {
-                tmp_send[j] = collection.ElementAt(i);
+                tmp_send.Add(collection.ElementAt(i));
             }
 
             return tmp_send;
@@ -92,7 +171,7 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает инвертированную текущую коллекцию</returns>
         public ListExt<T> Inverse()
         {
-            return new ListExt<T>(Inverse(this));
+            return Inverse(this);
         }//---метод Inverse
         #endregion
     } //---класс ListExt<T>
