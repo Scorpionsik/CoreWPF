@@ -47,4 +47,28 @@ namespace CoreWPF.Windows
             else this.WindowState = WindowState.Normal;
         } //---метод WinExtState
     } //-класс WindowExt
+
+    public partial class WindowExt<T> : WindowExt
+    {
+        public new object DataContext
+        {
+            get { return base.DataContext; }
+            set
+            {
+                if(value is ViewModel<T>)
+                {
+                    base.DataContext = value;
+                }
+            }
+        }
+
+        public virtual T ReturnResult
+        {
+            get
+            {
+                if (this.DataContext is ViewModel<T>) return ((ViewModel<T>)this.DataContext).ReturnResult;
+                else return default(T);
+            }
+        }
+    }
 }

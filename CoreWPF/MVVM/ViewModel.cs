@@ -49,4 +49,9 @@ namespace CoreWPF.MVVM
             }
         }
     }
+
+    public abstract partial class ViewModel<T> : ViewModel
+    {
+        public virtual T ReturnResult { get; set; }
+    }
 }
