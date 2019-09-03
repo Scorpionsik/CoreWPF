@@ -67,6 +67,7 @@
     <Compile Include="Utitltes\RelayCommand.cs" />
     <Compile Include="Utitltes\UnixTime.cs" />
     <Compile Include="Windows\DialogWindowExt.cs" />
+    <Compile Include="Windows\Enums\WindowClose.cs" />
     <Compile Include="Windows\WindowExt.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,5 +44,7 @@ namespace CoreWPF.Windows
                 else return default(T);
             }
         }
+
+        public DialogWindowExt() : base() { }
     }
 }

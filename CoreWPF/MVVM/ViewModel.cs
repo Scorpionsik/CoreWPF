@@ -1,4 +1,5 @@
 ﻿using CoreWPF.Windows;
+using CoreWPF.Windows.Enums;
 using System;
 
 namespace CoreWPF.MVVM
@@ -47,6 +48,11 @@ namespace CoreWPF.MVVM
                 this.title = value;
                 this.OnPropertyChanged("Title");
             }
+        }
+
+        public virtual WindowClose CloseMethod()
+        {
+            return WindowClose.Confirm;
         }
     }
 
