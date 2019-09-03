@@ -1,4 +1,5 @@
-﻿using CoreWPF.Windows;
+﻿using CoreWPF.Utilites;
+using CoreWPF.Windows;
 using CoreWPF.Windows.Enums;
 using System;
 
@@ -53,6 +54,39 @@ namespace CoreWPF.MVVM
         public virtual WindowClose CloseMethod()
         {
             return WindowClose.Confirm;
+        }
+
+        public virtual RelayCommand Command_close
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    this.Event_close?.Invoke();
+                });
+            }
+        }
+
+        public virtual RelayCommand Command_minimized
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    this.Event_minimized?.Invoke();
+                });
+            }
+        }
+
+        public virtual RelayCommand Command_state
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    this.Event_state?.Invoke();
+                });
+            }
         }
     }
 
