@@ -114,10 +114,5 @@ namespace CoreWPF.MVVM
     public abstract partial class ViewModel<T> : ViewModel
     {
         public virtual T ReturnResult { get; private set; }
-
-        protected void SetReturnResult(T result)
-        {
-            this.ReturnResult = result;
-        }
     }
 }

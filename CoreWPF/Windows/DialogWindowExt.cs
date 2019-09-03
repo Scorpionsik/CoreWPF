@@ -15,6 +15,7 @@ namespace CoreWPF.Windows
                     vm.Event_save += new Action(this.Save);
                     base.DataContext = vm;
                 }
+                else base.DataContext = value;
             }
         }
 
@@ -38,10 +39,11 @@ namespace CoreWPF.Windows
             get { return base.DataContext; }
             set
             {
-                if (value is ViewModel<T>)
+                if (value is ViewModel<T> vm)
                 {
-                    base.DataContext = value;
+                    base.DataContext = vm;
                 }
+                else base.DataContext = value;
             }
         }
 

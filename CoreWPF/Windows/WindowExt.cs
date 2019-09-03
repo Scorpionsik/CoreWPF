@@ -77,10 +77,11 @@ namespace CoreWPF.Windows
             get { return base.DataContext; }
             set
             {
-                if(value is ViewModel<T>)
+                if (value is ViewModel<T> vm)
                 {
-                    base.DataContext = value;
+                    base.DataContext = vm;
                 }
+                else base.DataContext = value;
             }
         }
 
