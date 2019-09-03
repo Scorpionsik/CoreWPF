@@ -20,6 +20,16 @@ namespace CoreWPF.MVVM
             }
         }
 
+        private event Action event_save;
+        public virtual Action Event_save
+        {
+            get { return this.event_save; }
+            set
+            {
+                this.event_save = new Action(value);
+            }
+        }
+
         private event Action event_minimized;
         public virtual Action Event_minimized
         {
@@ -85,6 +95,17 @@ namespace CoreWPF.MVVM
                 return new RelayCommand(obj =>
                 {
                     this.Event_state?.Invoke();
+                });
+            }
+        }
+
+        public virtual RelayCommand Command_save
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    this.Event_save?.Invoke();
                 });
             }
         }

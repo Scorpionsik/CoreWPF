@@ -1,9 +1,23 @@
 ﻿using CoreWPF.MVVM;
+using System;
 
 namespace CoreWPF.Windows
 {
     public partial class DialogWindowExt : WindowExt
     {
+        public new object DataContext
+        {
+            get { return base.DataContext; }
+            set
+            {
+                if (value is ViewModel vm)
+                {
+                    vm.Event_save += new Action(this.Save);
+                    base.DataContext = vm;
+                }
+            }
+        }
+
         public DialogWindowExt() : base() { }
 
         public new bool? Show()
@@ -14,11 +28,6 @@ namespace CoreWPF.Windows
         public void Save()
         {
             this.DialogResult = true;
-        }
-
-        public new void Close()
-        {
-            this.DialogResult = false;
         }
     }
 
