@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreWPF.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -147,6 +148,21 @@ namespace CoreWPF.Utilites
                 }
             }
         } //---метод RemoveRange
+
+        public ListExt<int> GetId()
+        {
+            ListExt<int> tmp_send = new ListExt<int>();
+
+            foreach(T model in this)
+            {
+                if(model is IIdentify i)
+                {
+                    tmp_send.Add(i.Id);
+                }
+            }
+
+            return tmp_send;
+        }
 
         /// <summary>
         /// Инвертирует полученную коллекцию
