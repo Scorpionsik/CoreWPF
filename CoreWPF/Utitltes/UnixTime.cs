@@ -120,7 +120,7 @@ namespace CoreWPF.Utilites
 
     public class UnixTimeConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is double unix_stamp)
             {
@@ -129,7 +129,7 @@ namespace CoreWPF.Utilites
             else return DependencyProperty.UnsetValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string string_time)
             {
