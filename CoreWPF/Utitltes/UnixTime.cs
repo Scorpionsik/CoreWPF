@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
 
 namespace CoreWPF.Utilites
 {
@@ -113,5 +117,26 @@ namespace CoreWPF.Utilites
         }//---метод CurrentDateTime
         #endregion
     } //---класс UnixTime
+
+    public class UnixTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double unix_stamp)
+            {
+                return UnixTime.ToString(unix_stamp);
+            }
+            else return DependencyProperty.UnsetValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string string_time)
+            {
+                return UnixTime.ToUnixTimestamp(UnixTime.ToDateTime(string_time));
+            }
+            else return DependencyProperty.UnsetValue;
+        }
+    }
 } //---пространство имён CoreWPF.Utilites
 //---EOF
