@@ -155,10 +155,11 @@ namespace CoreWPF.Utilites
 
             foreach(T model in this)
             {
-                if(model is IIdentify i)
+                if (model is IIdentify i)
                 {
                     tmp_send.Add(i.Id);
                 }
+                else return null;
             }
 
             return tmp_send;
