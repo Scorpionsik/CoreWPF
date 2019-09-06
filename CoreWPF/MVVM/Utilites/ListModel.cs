@@ -1,5 +1,6 @@
 ﻿using CoreWPF.MVVM.Interfaces;
 using CoreWPF.Utilites;
+using System;
 using System.Collections.Generic;
 
 namespace CoreWPF.MVVM.Utilites
@@ -39,6 +40,11 @@ namespace CoreWPF.MVVM.Utilites
                 }
             }
         } //---метод RemoveRange
+
+        public new ListModel<T> FindRange(Func<T, bool> predicate)
+        {
+            return new ListModel<T>(base.FindRange(predicate));
+        }
 
         /// <summary>
         /// Определяет, входил ли элемент в коллекцию; сравнивает через Equals
