@@ -149,9 +149,9 @@ namespace CoreWPF.Utilites
             }
         } //---метод RemoveRange
 
-        public ListExt<int> GetId()
+        public List<int> GetId()
         {
-            ListExt<int> tmp_send = new ListExt<int>();
+            List<int> tmp_send = new List<int>();
 
             foreach(T model in this)
             {
