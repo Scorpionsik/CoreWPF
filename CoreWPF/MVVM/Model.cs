@@ -16,10 +16,13 @@ namespace CoreWPF.MVVM
         /// <summary>
         /// Событие выбора данной модели
         /// </summary>
-        public event Action<Model> Event_select_model
+        public Action<Model> Event_select_model
         {
-            add { this.event_select_model += value; }
-            remove { this.event_select_model -= value; }
+            get { return this.event_select_model; }
+            set
+            {
+                this.event_select_model = value;
+            }
         } //---свойство Event_select_model
 
         /// <summary>
