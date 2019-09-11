@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace CoreWPF.Utitltes
+namespace CoreWPF.Utilites
 {
     public sealed class IgnoreMouseWheelBehavior : Behavior<UIElement>
     {
