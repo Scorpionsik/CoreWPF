@@ -6,7 +6,7 @@ namespace CoreWPF.Utilites.Navigation
 {
     public abstract partial class NavigationViewModel : ViewModel
     {
-        private readonly NavigationManager navigator;
+        public NavigationManager Navigator { get; private set; }
         private string subtitle;
         public string Subtitle
         {
@@ -36,7 +36,7 @@ namespace CoreWPF.Utilites.Navigation
         public NavigationViewModel(NavigationManager navigator) : base()
         {
             navigator.Navigation_invoke = new Action<INavigateModule>(this.SetContent);
-            this.navigator = navigator;
+            this.Navigator = navigator;
         }
 
         public abstract void SetContent(INavigateModule module);
