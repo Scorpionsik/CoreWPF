@@ -120,6 +120,11 @@ namespace CoreWPF.Utilites.Navigation
 
             navigationAware.OnNavigatingTo(arg);
         }
+
+        public string GetSubtitle(string navigationKey)
+        {
+            return ((INavigateModule)_viewModelsByNavigationKey[navigationKey]).Subtitle;
+        }
         #endregion
     }
 }
