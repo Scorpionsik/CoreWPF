@@ -10,6 +10,7 @@ namespace CoreWPF.Utilites
     /// Наследуется от <see cref="ObservableCollection{T}"/>, расширяя функционал
     /// </summary>
     /// <typeparam name="T">Принимает любой <see cref="object"/></typeparam>
+    [Serializable]
     public partial class ListExt<T> : ObservableCollection<T>
     {
         #region Свойства
