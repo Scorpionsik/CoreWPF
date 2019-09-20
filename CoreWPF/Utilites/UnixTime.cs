@@ -22,6 +22,11 @@ namespace CoreWPF.Utilites
             return new DateTime(1970, 1, 1).AddSeconds(seconds);
         } //---метод ToDateTime
 
+        public static DateTimeOffset ToDateTimeOffset(double seconds)
+        {
+            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeZoneInfo.Local.BaseUtcOffset);
+        }
+
         /// <summary>
         /// Переводит строку определенного формата в <see cref="DateTime"/>
         /// </summary>
@@ -84,9 +89,19 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает Unix Timestamp</returns>
         public static double ToUnixTimestamp(DateTime date_time)
         {
-            return (DateTime.UtcNow.Subtract(date_time)).TotalSeconds;
+            TimeSpan epochTicks = new TimeSpan(new DateTime(1970, 1, 1).Ticks);
+            TimeSpan unixTicks = new TimeSpan(date_time.Ticks) - epochTicks;
+            return unixTicks.TotalSeconds;
+            //return (DateTime.UtcNow.Subtract(date_time)).TotalSeconds;
         } //---метод ToUnixTimestamp
+        /*
+        public static double ToUnixTimestamp(DateTimeOffset date_time)
+        {
+            return (DateTimeOffset.UtcNow.Subtract(date_time)).TotalSeconds;
+        } //---метод ToUnixTimestamp*/
         #endregion
+
+
 
         #region Методы для вычисления текущего времени
         /// <summary>
@@ -95,7 +110,7 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает Unix Timestamp текущего времени</returns>
         public static double CurrentUnixTimestamp()
         {
-            return UnixTime.ToUnixTimestamp(new DateTime(1970, 1, 1));
+            return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), TimeZoneInfo.Local))).TotalSeconds;
         } //---метод CurrentUnixTimestamp
 
         /// <summary>
