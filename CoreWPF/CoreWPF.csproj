@@ -65,6 +65,7 @@
     <Compile Include="Utilites\Navigation\NavigationModel.cs" />
     <Compile Include="Utilites\Navigation\NavigationViewModel.cs" />
     <Compile Include="Utilites\RelayCommand.cs" />
+    <Compile Include="Backup\UnixTime.cs" />
     <Compile Include="Utilites\UnixTime.cs" />
     <Compile Include="Windows\DialogWindowExt.cs" />
     <Compile Include="Windows\Enums\WindowClose.cs" />

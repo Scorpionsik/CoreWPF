@@ -22,11 +22,6 @@ namespace CoreWPF.Utilites
             return new DateTime(1970, 1, 1).AddSeconds(seconds);
         } //---метод ToDateTime
 
-        public static DateTimeOffset ToDateTimeOffset(double seconds)
-        {
-            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeZoneInfo.Local.BaseUtcOffset);
-        }
-
         /// <summary>
         /// Переводит строку определенного формата в <see cref="DateTime"/>
         /// </summary>
@@ -41,10 +36,10 @@ namespace CoreWPF.Utilites
                 string time = string_time;
                 if (string_time.Contains("+")) time = time.Remove(string_time.IndexOf("+"));
                 time = time.Remove(0, string_time.IndexOf("T") + 1);
-            
+
                 DateTime tmp_send = new DateTime(
-                Convert.ToInt32(date.Split('-')[0]), 
-                Convert.ToInt32(date.Split('-')[1]), 
+                Convert.ToInt32(date.Split('-')[0]),
+                Convert.ToInt32(date.Split('-')[1]),
                 Convert.ToInt32(date.Split('-')[2]),
                 Convert.ToInt32(time.Split(':')[0]),
                 Convert.ToInt32(time.Split(':')[1]),
@@ -67,7 +62,7 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает строчное представление времени</returns>
         public static string ToString(double seconds)
         {
-            return UnixTime.ToDateTime(seconds).ToLocalTime().ToString();
+            return UnixTime.ToDateTime(seconds).ToString();
         } //---метод ToString
 
         /// <summary>
@@ -92,16 +87,8 @@ namespace CoreWPF.Utilites
             TimeSpan epochTicks = new TimeSpan(new DateTime(1970, 1, 1).Ticks);
             TimeSpan unixTicks = new TimeSpan(date_time.Ticks) - epochTicks;
             return unixTicks.TotalSeconds;
-            //return (DateTime.UtcNow.Subtract(date_time)).TotalSeconds;
         } //---метод ToUnixTimestamp
-        /*
-        public static double ToUnixTimestamp(DateTimeOffset date_time)
-        {
-            return (DateTimeOffset.UtcNow.Subtract(date_time)).TotalSeconds;
-        } //---метод ToUnixTimestamp*/
         #endregion
-
-
 
         #region Методы для вычисления текущего времени
         /// <summary>
@@ -110,7 +97,7 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает Unix Timestamp текущего времени</returns>
         public static double CurrentUnixTimestamp()
         {
-            return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), TimeZoneInfo.Local))).TotalSeconds;
+            return (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         } //---метод CurrentUnixTimestamp
 
         /// <summary>
