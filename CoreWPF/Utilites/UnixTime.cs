@@ -11,15 +11,35 @@ namespace CoreWPF.Utilites
     /// </summary>
     public static partial class UnixTime
     {
+        public static TimeZoneInfo DefaultTimeZone { get; set; }
+
+        static UnixTime()
+        {
+            DefaultTimeZone = TimeZoneInfo.Local;
+        }
+
+        private static TimeSpan GetTimeSpan(TimeZoneInfo utс)
+        {
+            if (utс == null) return UnixTime.DefaultTimeZone.BaseUtcOffset;
+            else return utс.BaseUtcOffset;
+        }
+
+        #region Возвращают DateTimeOffset
+        public static DateTimeOffset ToDateTimeOffset(double seconds, TimeZoneInfo utc = null)
+        {
+            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, UnixTime.GetTimeSpan(utc)).AddSeconds(seconds);
+        } //---метод ToDateTimeOffset
+        #endregion
+
         #region Возвращают DateTime
         /// <summary>
         /// Преобразовывает Unix Timestamp в объект класса DateTime
         /// </summary>
         /// <param name="seconds">Принимает Unix Timestamp (в секундах)</param>
         /// <returns>Возвращает объект класса DateTime</returns>
-        public static DateTime ToDateTime(double seconds)
+        public static DateTime ToDateTime(double seconds, TimeZoneInfo utc = null)
         {
-            return new DateTime(1970, 1, 1).AddSeconds(seconds);
+            return UnixTime.ToDateTimeOffset(seconds, utc).DateTime;
         } //---метод ToDateTime
 
         /// <summary>
@@ -28,7 +48,7 @@ namespace CoreWPF.Utilites
         /// <param name="string_time">Принимает строку в формате "%год%-%месяц%-%день%Т%часы%:%минуты%:%секунды%"</param>
         /// <returns>Возвращает <see cref="DateTime"/> принятой строки</returns>
         /// <exception cref="ArgumentException"/>
-        public static DateTime ToDateTime(string string_time)
+        public static DateTime ToDateTime(string string_time, TimeZoneInfo utc = null)
         {
             try
             {
@@ -45,7 +65,7 @@ namespace CoreWPF.Utilites
                 Convert.ToInt32(time.Split(':')[1]),
                 Convert.ToInt32(time.Split(':')[2])
                 );
-                return UnixTime.ToDateTime(UnixTime.ToUnixTimestamp(tmp_send));
+                return UnixTime.ToDateTime(UnixTime.ToUnixTimestamp(tmp_send), utc);
             }
             catch
             {
@@ -60,19 +80,9 @@ namespace CoreWPF.Utilites
         /// </summary>
         /// <param name="seconds">Принимает Unix Timestamp</param>
         /// <returns>Возвращает строчное представление времени</returns>
-        public static string ToString(double seconds)
+        public static string ToString(double seconds, TimeZoneInfo utc = null)
         {
-            return UnixTime.ToDateTime(seconds).ToString();
-        } //---метод ToString
-
-        /// <summary>
-        /// Преобразовывает <see cref="DateTime"/> в строчное представление времени
-        /// </summary>
-        /// <param name="date_time">Принимает <see cref="DateTime"/></param>
-        /// <returns>Возвращает строчное представление времени</returns>
-        public static string ToString(DateTime date_time)
-        {
-            return UnixTime.ToString(UnixTime.ToUnixTimestamp(date_time));
+            return UnixTime.ToDateTime(seconds, utc).ToString();
         } //---метод ToString
         #endregion
 
@@ -88,6 +98,11 @@ namespace CoreWPF.Utilites
             TimeSpan unixTicks = new TimeSpan(date_time.Ticks) - epochTicks;
             return unixTicks.TotalSeconds;
         } //---метод ToUnixTimestamp
+
+        public static double ToUnixTimestamp(DateTimeOffset date_time)
+        {
+            return UnixTime.ToUnixTimestamp(date_time.DateTime);
+        }
         #endregion
 
         #region Методы для вычисления текущего времени
@@ -95,27 +110,29 @@ namespace CoreWPF.Utilites
         /// Вычисляет текущее время
         /// </summary>
         /// <returns>Возвращает Unix Timestamp текущего времени</returns>
-        public static double CurrentUnixTimestamp()
+        public static double CurrentUnixTimestamp(TimeZoneInfo utc = null)
         {
-            return (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            if(utc == null) return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), UnixTime.DefaultTimeZone))).TotalSeconds;
+            else return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), utc))).TotalSeconds;
+            //return (DateTimeOffset.UtcNow.Subtract(new DateTimeOffset(1970, 1, 1, 0, 0, 0, UnixTime.GetTimeSpan(utc)))).TotalSeconds;
         } //---метод CurrentUnixTimestamp
 
         /// <summary>
         /// Вычисляет текущее время
         /// </summary>
         /// <returns>Возвращает строкое представление текущего времени</returns>
-        public static string CurrentString()
+        public static string CurrentString(TimeZoneInfo utc = null)
         {
-            return UnixTime.ToString(UnixTime.CurrentUnixTimestamp());
+            return UnixTime.ToString(UnixTime.CurrentUnixTimestamp(), utc);
         } //---метод CurrentString
 
         /// <summary>
         /// Вычисляет текущее время
         /// </summary>
         /// <returns>Возвращает <see cref="DateTime"/> текущего времени</returns>
-        public static DateTime CurrentDateTime()
+        public static DateTime CurrentDateTime(TimeZoneInfo utc = null)
         {
-            return UnixTime.ToDateTime(UnixTime.CurrentUnixTimestamp());
+            return UnixTime.ToDateTime(UnixTime.CurrentUnixTimestamp(), utc);
         }//---метод CurrentDateTime
         #endregion
     } //---класс UnixTime
