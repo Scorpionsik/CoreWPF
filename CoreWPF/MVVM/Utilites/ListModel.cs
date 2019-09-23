@@ -9,6 +9,7 @@ namespace CoreWPF.MVVM.Utilites
     /// Наследуется от <see cref="ListExt{T}"/>, адаптируя и расширяя функционал для <see cref="IModel"/>
     /// </summary>
     /// <typeparam name="T">Должен наследоваться от <see cref="IModel"/></typeparam>
+    [Serializable]
     public partial class ListModel<T> : ListExt<T> where T : IModel
     {
         /// <summary>
