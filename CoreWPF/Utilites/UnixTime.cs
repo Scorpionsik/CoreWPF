@@ -39,8 +39,7 @@ namespace CoreWPF.Utilites
         /// <returns>Возвращает объект класса DateTime</returns>
         public static DateTime ToDateTime(double milliseconds, TimeZoneInfo utc = null)
         {
-            double seconds = Convert.ToDouble(milliseconds * Convert.ToDouble(1000));
-            return UnixTime.ToDateTimeOffset(seconds, utc).DateTime;
+            return UnixTime.ToDateTimeOffset(milliseconds, utc).DateTime;
         } //---метод ToDateTime
 
         /// <summary>
