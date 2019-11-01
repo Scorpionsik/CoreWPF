@@ -9,7 +9,7 @@ namespace CoreWPF.MVVM
     /// Класс, который автоматически привязывается к событиям <see cref="WindowExt"/>
     /// </summary>
     [Serializable]
-    public abstract partial class ViewModel : NotifyPropertyChanged
+    public abstract class ViewModel : NotifyPropertyChanged
     {
         private event Action event_close;
         public virtual Action Event_close

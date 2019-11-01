@@ -1,15 +1,10 @@
 ﻿namespace CoreWPF.Interfaces
 {
     /// <summary>
-    /// Интерфейс для представления данных в формате Id - Имя
+    /// Интерфейс для представления данных со свойствами <see cref="IId.Id"/> и <see cref="Name"/>.
     /// </summary>
-    public interface IIdentify
+    public interface IIdentify : IId
     {
-        /// <summary>
-        /// Id объекта
-        /// </summary>
-        int Id { get; }
-
         /// <summary>
         /// Имя объекта
         /// </summary>

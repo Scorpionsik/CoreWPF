@@ -13,6 +13,7 @@ namespace CoreWPF.Utilites.Navigation
     /// Далее регистрируются ViewModel (в который передается ссылка на текущий менеджер), View и ключ, по которому можно будет найти ViewModel в коллекции менеджера. Рекомендуется отдельно хранить список ключей, по которым можно обратиться к тому или иному ViewModel.
     /// После чего менеджер передается в конструкторе ViewModel основного окна.</para>
     /// </summary>
+    [Serializable]
     public class NavigationManager
     {
         #region Поля и свойства

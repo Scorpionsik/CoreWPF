@@ -10,23 +10,23 @@ namespace CoreWPF.MVVM.Utilites
     /// </summary>
     /// <typeparam name="T">Должен наследоваться от <see cref="IModel"/></typeparam>
     [Serializable]
-    public partial class ListModel<T> : ListExt<T> where T : IModel
+    public class ListModel<T> : ListExt<T> where T : IModel
     {
         /// <summary>
-        /// Конструктор
+        /// Инициализирует новый экземпляр класса <see cref="ListModel{T}"/>.
         /// </summary>
         public ListModel() : base() { }
 
         /// <summary>
-        /// Конструктор
+        /// Инициализирует новый экземпляр класса <see cref="ListModel{T}"/>, который содержит элементы, скопированные из указанной коллекции.
         /// </summary>
-        /// <param name="collection">Принимает коллекцию, из которой создает массив элементов</param>
+        /// <param name="collection">Принимает коллекцию, которая будет скорпирована в текущий экземпляр <see cref="ListModel{T}"/>.</param>
         public ListModel(IEnumerable<T> collection) : base(collection) { }
 
         /// <summary>
-        /// Удаляет из данного массива элементы коллекции; сравнивает объекты массива и коллекции как критерий
+        /// Удаляет из данного массива элементы коллекции; сравнивает объекты массива и коллекции, используя <see cref="IModel.Equals(IModel)"/>.
         /// </summary>
-        /// <param name="collection">Принимает коллекцию элементов для удаления</param>
+        /// <param name="collection">Принимает коллекцию элементов для сравнения и удаления</param>
         public new void RemoveRange(IEnumerable<T> collection)
         {
             foreach (T remove in collection)

@@ -1,9 +1,11 @@
 ﻿using CoreWPF.MVVM;
 using CoreWPF.Utilites.Navigation.Interfaces;
+using System;
 
 namespace CoreWPF.Utilites.Navigation
 {
-    public abstract partial class NavigationModel : Model, INavigateModule
+    [Serializable]
+    public abstract class NavigationModel : Model, INavigateModule
     {
         public NavigationManager Navigator { get; private set; }
         public string Subtitle { get; private set; }

@@ -6,6 +6,7 @@ namespace CoreWPF.Utilites
     /// <summary>
     /// Класс, реализующий интерфейс <see cref="ICommand"/>; определяет команду, принимающей в качестве параметра <see cref="object"/>
     /// </summary>
+    [Serializable]
     public class RelayCommand : ICommand
     {
         /// <summary>

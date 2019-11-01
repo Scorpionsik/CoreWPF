@@ -4,7 +4,8 @@ using System;
 
 namespace CoreWPF.Utilites.Navigation
 {
-    public abstract partial class NavigationViewModel : ViewModel
+    [Serializable]
+    public abstract class NavigationViewModel : ViewModel
     {
         public NavigationManager Navigator { get; private set; }
         private string subtitle;

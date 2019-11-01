@@ -52,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IId.cs" />
     <Compile Include="Interfaces\IIdentify.cs" />
     <Compile Include="MVVM\Interfaces\IModel.cs" />
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Utilites\Navigation\NavigationModel.cs" />
     <Compile Include="Utilites\Navigation\NavigationViewModel.cs" />
     <Compile Include="Utilites\RelayCommand.cs" />
-    <Compile Include="Backup\UnixTime.cs" />
+    <Compile Include="Utilites\StatusString.cs" />
     <Compile Include="Utilites\UnixTime.cs" />
     <Compile Include="Windows\DialogWindowExt.cs" />
     <Compile Include="Windows\Enums\WindowClose.cs" />
@@ -75,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Backup\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

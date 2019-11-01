@@ -7,9 +7,9 @@ using System.Windows.Data;
 namespace CoreWPF.Utilites
 {
     /// <summary>
-    /// Реализует методы для работы с Unix Timestamp (в секундах)
+    /// Реализует методы для работы с Unix Timestamp
     /// </summary>
-    public static partial class UnixTime
+    public static class UnixTime
     {
         public static TimeZoneInfo DefaultTimeZone { get; set; }
 
@@ -114,7 +114,6 @@ namespace CoreWPF.Utilites
         {
             if(utc == null) return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), UnixTime.DefaultTimeZone))).TotalMilliseconds;
             else return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), utc))).TotalMilliseconds;
-            //return (DateTimeOffset.UtcNow.Subtract(new DateTimeOffset(1970, 1, 1, 0, 0, 0, UnixTime.GetTimeSpan(utc)))).TotalSeconds;
         } //---метод CurrentUnixTimestamp
 
         /// <summary>

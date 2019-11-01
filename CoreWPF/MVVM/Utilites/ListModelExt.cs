@@ -2,15 +2,16 @@
 using CoreWPF.Utilites;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CoreWPF.MVVM.Utilites
 {
     /// <summary>
     /// Наследуется от <see cref="ListExt{T}"/>, адаптируя и расширяя функционал для <see cref="IModel{T}"/>
     /// </summary>
-    /// <typeparam name="T">Должен наследоваться от <see cref="IModel"/></typeparam>
+    /// <typeparam name="T">Объект должен наследоваться от <see cref="INotifyPropertyChanged"/> и <see cref="IModel{T}"/></typeparam>
     [Serializable]
-    public partial class ListModelExt<T> : ListExt<T> where T : NotifyPropertyChanged, IModel<T>
+    public class ListModelExt<T> : ListExt<T> where T : INotifyPropertyChanged, IModel<T>
     {
         /// <summary>
         /// Конструктор

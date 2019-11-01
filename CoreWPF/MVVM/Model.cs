@@ -5,7 +5,7 @@ using System.Linq;
 namespace CoreWPF.MVVM
 {
     [Serializable]
-    public abstract partial class Model : NotifyPropertyChanged
+    public abstract class Model : NotifyPropertyChanged
     {
         #region Поля и свойства
         /// <summary>
