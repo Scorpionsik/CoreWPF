@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 
 namespace CoreWPF.Utilites
@@ -41,13 +43,19 @@ namespace CoreWPF.Utilites
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ListExt{T}"/>.
         /// </summary>
-        public ListExt() : base() { }
+        public ListExt() : base()
+        {
+            CreateAsyncOp();
+        }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ListExt{T}"/>, который содержит элементы, скопированные из указанной коллекции.
         /// </summary>
         /// <param name="collection">Принимает коллекцию, которая будет скорпирована в текущий экземпляр <see cref="ListExt{T}"/>.</param>
-        public ListExt(IEnumerable<T> collection) : base(collection) { }
+        public ListExt(IEnumerable<T> collection) : base(collection)
+        {
+            CreateAsyncOp();
+        }
         #endregion
 
         #region Методы
@@ -176,6 +184,40 @@ namespace CoreWPF.Utilites
 
             return tmp_send;
         }//---метод Inverse
+        #endregion
+
+        #region Async ListExt
+        private AsyncOperation asyncOp = null;
+
+        private void CreateAsyncOp()
+        {
+            // Create the AsyncOperation to post events on the creator thread
+            asyncOp = AsyncOperationManager.CreateOperation(null);
+        }
+
+        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            // Post the CollectionChanged event on the creator thread
+            asyncOp.Post(RaiseCollectionChanged, e);
+        }
+
+        private void RaiseCollectionChanged(object param)
+        {
+            // We are in the creator thread, call the base implementation directly
+            base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
+        }
+
+        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            // Post the PropertyChanged event on the creator thread
+            asyncOp.Post(RaisePropertyChanged, e);
+        }
+
+        private void RaisePropertyChanged(object param)
+        {
+            // We are in the creator thread, call the base implementation directly
+            base.OnPropertyChanged((PropertyChangedEventArgs)param);
+        }
         #endregion
 
         #region Статические методы
