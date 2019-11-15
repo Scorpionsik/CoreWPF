@@ -16,6 +16,11 @@ namespace CoreWPF.Utilites
     public class StatusString : NotifyPropertyChanged
     {
         /// <summary>
+        /// Таймер для своевременного стирания текста.
+        /// </summary>
+        private Timer SingleTimer;
+
+        /// <summary>
         /// Константа для метода <see cref="SetAsync(string, double)"/>; задает 5-секундный интервал отображения текста.
         /// </summary>
         public static double LongTime = 5000;
@@ -53,11 +58,11 @@ namespace CoreWPF.Utilites
         {
             await Task.Run(() =>
             {
+                this.ClearTimer();
                 this.Status = status;
                 if (milliseconds > 0)
                 {
-                    Thread.Sleep((int)milliseconds);
-                    this.Status = "";
+                    this.SingleTimer = new Timer(new TimerCallback(this.Clear), null, (int)milliseconds, Timeout.Infinite);
                 }
             });
         } //---метод SetAsync
@@ -69,9 +74,32 @@ namespace CoreWPF.Utilites
         {
             await Task.Run(() =>
             {
+                this.ClearTimer();
                 this.Status = "";
             });
         } //---метод ClearAsync
+
+        /// <summary>
+        /// Метод для стирания текста и очистки таймера; используется для <see cref="SingleTimer"/>.
+        /// </summary>
+        /// <param name="obj">Не используется; всегда получает null.</param>
+        private void Clear(object obj)
+        {
+            this.ClearTimer();
+            this.Status = "";
+        } //---метод Clear
+
+        /// <summary>
+        /// Метод для очистки таймера; используется для того, чтобы обновлять время отображения сообщений.
+        /// </summary>
+        private void ClearTimer()
+        {
+            if (this.SingleTimer != null)
+            {
+                this.SingleTimer.Dispose();
+                this.SingleTimer = null;
+            }
+        } //---метод ClearTimer
     } //---класс StatusString
 } //---пространство имён CoreWPF.Utilites
 //---EOF
