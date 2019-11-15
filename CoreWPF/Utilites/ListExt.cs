@@ -187,6 +187,7 @@ namespace CoreWPF.Utilites
         #endregion
 
         #region Async ListExt
+        [NonSerialized]
         private AsyncOperation asyncOp = null;
 
         private void CreateAsyncOp()
