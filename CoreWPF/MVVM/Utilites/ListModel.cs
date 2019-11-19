@@ -41,11 +41,15 @@ namespace CoreWPF.MVVM.Utilites
                 }
             }
         } //---метод RemoveRange
-
+        /// <summary>
+        /// Возвращает коллекцию, соответствующую указанному условию.
+        /// </summary>
+        /// <param name="predicate">Условие для проверки коллекции.</param>
+        /// <returns>Возвращает коллекцию, соответствующую указанному условию.</returns>
         public new ListModel<T> FindRange(Func<T, bool> predicate)
         {
             return new ListModel<T>(base.FindRange(predicate));
-        }
+        } //---метод FindRange
 
         /// <summary>
         /// Определяет, входил ли элемент в коллекцию; сравнивает через Equals
@@ -61,6 +65,10 @@ namespace CoreWPF.MVVM.Utilites
             return false;
         } //---метод Contains
 
+        /// <summary>
+        /// Выполняет слияние элемента коллекции; Сначала элемент проверяется через <see cref="IModel.Equals(IModel)"/>, если найдено совпадение - применяется метод <see cref="IModel.Merge(IModel)"/>.
+        /// </summary>
+        /// <param name="model">Принимает <see cref="IModel"/> для сравнения и слияния.</param>
         public void Merge(T model)
         {
             foreach (T merge in this)
@@ -71,15 +79,19 @@ namespace CoreWPF.MVVM.Utilites
                     break;
                 }
             }
-        }
+        } //---метод Merge
 
+        /// <summary>
+        /// Выполняет слияние элементов коллекции; Сначала элементы проверяются через <see cref="IModel.Equals(IModel)"/>, если они равны - применяется метод <see cref="IModel.Merge(IModel)"/>.
+        /// </summary>
+        /// <param name="models">Принимает коллекцию <see cref="IModel"/> для сравнения и слияния.</param>
         public void Merge(IEnumerable<T> models)
         {
             foreach (T merge in models)
             {
                 this.Merge(merge);
             }
-        }
+        } //---метод Merge
 
         /// <summary>
         /// Создает копию текущей коллекции
@@ -93,6 +105,7 @@ namespace CoreWPF.MVVM.Utilites
                 tmp_send.Add((T)model.Clone());
             }
             return tmp_send;
-        }
+        } //---метод Clone
     } //---класс ListModel<T>
-}
+} //---пространство имён CoreWPF.MVVM.Utilites
+//---EOF
