@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 
 namespace CoreWPF.Utilites
@@ -45,7 +43,8 @@ namespace CoreWPF.Utilites
         /// </summary>
         public ListExt() : base()
         {
-            CreateAsyncOp();
+            //For Async ListExt
+            //CreateAsyncOp();
         }
 
         /// <summary>
@@ -54,7 +53,8 @@ namespace CoreWPF.Utilites
         /// <param name="collection">Принимает коллекцию, которая будет скорпирована в текущий экземпляр <see cref="ListExt{T}"/>.</param>
         public ListExt(IEnumerable<T> collection) : base(collection)
         {
-            CreateAsyncOp();
+            //For Async ListExt
+            //CreateAsyncOp();
         }
         #endregion
 
@@ -187,6 +187,7 @@ namespace CoreWPF.Utilites
         #endregion
 
         #region Async ListExt
+        /*
         [NonSerialized]
         private AsyncOperation asyncOp = null;
 
@@ -219,6 +220,7 @@ namespace CoreWPF.Utilites
             // We are in the creator thread, call the base implementation directly
             base.OnPropertyChanged((PropertyChangedEventArgs)param);
         }
+        */
         #endregion
 
         #region Статические методы
