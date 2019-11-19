@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace CoreWPF.MVVM
 {
+    /// <summary>
+    /// Предоставляет базовый функционал для модели приложения; наследуется от <see cref="NotifyPropertyChanged"/>.
+    /// </summary>
     [Serializable]
     public abstract class Model : NotifyPropertyChanged
     {
@@ -14,7 +17,7 @@ namespace CoreWPF.MVVM
         [field: NonSerialized]
         private event Action<Model> event_select_model;
         /// <summary>
-        /// Событие выбора данной модели
+        /// Ссылка на событие выбора данной модели
         /// </summary>
         public Action<Model> Event_select_model
         {
@@ -26,7 +29,7 @@ namespace CoreWPF.MVVM
         } //---свойство Event_select_model
 
         /// <summary>
-        /// Возвращает имя класса текущей модели
+        /// Возвращает название класса текущей модели
         /// </summary>
         public string ClassName
         {
@@ -49,5 +52,6 @@ namespace CoreWPF.MVVM
             }
         } //---команда Command_select_model
         #endregion
-    }
-}
+    } //---класс Model
+} //---пространство имён CoreWPF.MVVM
+//---EOF

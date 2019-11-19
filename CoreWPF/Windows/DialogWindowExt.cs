@@ -31,31 +31,4 @@ namespace CoreWPF.Windows
             this.DialogResult = true;
         }
     }
-
-    public partial class DialogWindowExt<T> : DialogWindowExt
-    {
-        public new object DataContext
-        {
-            get { return base.DataContext; }
-            set
-            {
-                if (value is ViewModel<T> vm)
-                {
-                    base.DataContext = vm;
-                }
-                else base.DataContext = value;
-            }
-        }
-
-        public virtual T ReturnResult
-        {
-            get
-            {
-                if (this.DataContext is ViewModel<T>) return ((ViewModel<T>)this.DataContext).ReturnResult;
-                else return default(T);
-            }
-        }
-
-        public DialogWindowExt() : base() { }
-    }
 }

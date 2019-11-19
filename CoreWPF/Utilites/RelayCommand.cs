@@ -20,7 +20,7 @@ namespace CoreWPF.Utilites
         private Func<object, bool> canExecute;
 
         /// <summary>
-        /// Происходит при изменениях, влияющих на то, должна выполняться данная команда или нет.
+        /// Происходит при <see cref="System.Windows.Input.CommandManager"/> определяет условия, которые могут повлиять на возможность выполнения команды.
         /// </summary>
         public event EventHandler CanExecuteChanged
         {
@@ -40,20 +40,20 @@ namespace CoreWPF.Utilites
         } //---конструктор RelayCommand
 
         /// <summary>
-        /// Определяет метод, который определяет, может ли данная команда выполняться в ее текущем состоянии.
+        /// Метод для проверки, может ли данная команда выполняться в ее текущем состоянии.
         /// </summary>
-        /// <param name="parameter">Данные, используемые данной командой. Если команда не требует передачи данных, этому объект может быть присвоено значение null.</param>
+        /// <param name="parameter">Данные, используемые данной командой.</param>
         /// <returns>Вернет true, если эту команду можно выполнить; в противном случае — false.</returns>
-        public bool CanExecute(object parameter)
+        public bool CanExecute(object parameter = null)
         {
             return this.canExecute == null || this.canExecute(parameter);
         } //---метод CanExecute
 
         /// <summary>
-        /// Определяет метод, вызываемый при вызове данной команды.
+        /// Метод для вызова текущей команды.
         /// </summary>
-        /// <param name="parameter">Данные, используемые данной командой. Если команда не требует передачи данных, этому объекту можно присвоить значение null.</param>
-        public void Execute(object parameter)
+        /// <param name="parameter">Данные, которые будут переданы для текущей команды.</param>
+        public void Execute(object parameter = null)
         {
             this.execute(parameter);
         } //---метод Execute
@@ -75,7 +75,7 @@ namespace CoreWPF.Utilites
         private Func<T, bool> canExecute;
 
         /// <summary>
-        /// Происходит при изменениях, влияющих на то, должна выполняться данная команда или нет.
+        /// Происходит при <see cref="System.Windows.Input.CommandManager"/> определяет условия, которые могут повлиять на возможность выполнения команды.
         /// </summary>
         public event EventHandler CanExecuteChanged
         {
@@ -95,9 +95,9 @@ namespace CoreWPF.Utilites
         } //---конструктор RelayCommand
 
         /// <summary>
-        /// Определяет метод, который определяет, может ли данная команда выполняться в ее текущем состоянии.
+        /// Метод для проверки, может ли данная команда выполняться в ее текущем состоянии.
         /// </summary>
-        /// <param name="parameter">Данные, используемые данной командой. Если команда не требует передачи данных, этому объект может быть присвоено значение null.</param>
+        /// <param name="parameter">Данные, используемые текущей командой.</param>
         /// <returns>Вернет true, если эту команду можно выполнить; в противном случае — false.</returns>
         public bool CanExecute(object parameter)
         {
@@ -105,9 +105,9 @@ namespace CoreWPF.Utilites
         } //---метод CanExecute
 
         /// <summary>
-        /// Определяет метод, вызываемый при вызове данной команды.
+        /// Метод для вызова текущей команды.
         /// </summary>
-        /// <param name="parameter">Данные, используемые данной командой. Если команда не требует передачи данных, этому объекту можно присвоить значение null.</param>
+        /// <param name="parameter">Данные, которые будут переданы для текущей команды.</param>
         public void Execute(object parameter)
         {
             this.execute((T)parameter);

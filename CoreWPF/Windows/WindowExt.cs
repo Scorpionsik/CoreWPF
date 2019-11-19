@@ -69,32 +69,5 @@ namespace CoreWPF.Windows
                 }
             }
         }
-    } //-класс WindowExt
-
-    public partial class WindowExt<T> : WindowExt
-    {
-        public new object DataContext
-        {
-            get { return base.DataContext; }
-            set
-            {
-                if (value is ViewModel<T> vm)
-                {
-                    base.DataContext = vm;
-                }
-                else base.DataContext = value;
-            }
-        }
-
-        public virtual T ReturnResult
-        {
-            get
-            {
-                if (this.DataContext is ViewModel<T>) return ((ViewModel<T>)this.DataContext).ReturnResult;
-                else return default(T);
-            }
-        }
-
-        public WindowExt() : base() { }
-    }
+    } //---класс WindowExt
 }

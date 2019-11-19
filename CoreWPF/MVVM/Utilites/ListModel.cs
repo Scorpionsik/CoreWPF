@@ -41,6 +41,7 @@ namespace CoreWPF.MVVM.Utilites
                 }
             }
         } //---метод RemoveRange
+
         /// <summary>
         /// Возвращает коллекцию, соответствующую указанному условию.
         /// </summary>
