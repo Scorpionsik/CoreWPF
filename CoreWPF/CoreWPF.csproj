@@ -58,7 +58,6 @@
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
     <Compile Include="MVVM\Model.cs" />
     <Compile Include="MVVM\Utilites\ListModel.cs" />
-    <Compile Include="MVVM\Utilites\ListModelExt.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilites\IgnoreMouseWheelBehavior.cs" />
@@ -78,8 +77,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Backup\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
