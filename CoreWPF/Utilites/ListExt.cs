@@ -102,7 +102,12 @@ namespace CoreWPF.Utilites
         {
             return this.Last(predicate);
         } //---метод FindLast
-        
+
+        /// <summary>
+        /// Возвращает коллекцию, соответствующую указанному условию.
+        /// </summary>
+        /// <param name="predicate">Условие для проверки коллекции.</param>
+        /// <returns>Возвращает коллекцию, соответствующую указанному условию.</returns>
         public ListExt<T> FindRange(Func<T, bool> predicate)
         {
             ListExt<T> tmp_send = new ListExt<T>();
@@ -113,8 +118,12 @@ namespace CoreWPF.Utilites
             }
 
             return tmp_send;
-        }
+        } //---метод FindRange
 
+        /// <summary>
+        /// Перетасовывает элементы коллекции.
+        /// </summary>
+        /// <returns>Возвращает перетасованную копию коллекции.</returns>
         public ListExt<T> Shuffle()
         {
             int[] tmp_index = new int[this.Count];
@@ -132,7 +141,7 @@ namespace CoreWPF.Utilites
             }
             
             return tmp_shuffle;
-        }
+        } //---метод Shuffle
 
         /// <summary>
         /// Удаляет из данного массива элементы коллекции; сравнивает объекты массива и коллекции как критерий
@@ -153,13 +162,17 @@ namespace CoreWPF.Utilites
             }
         } //---метод RemoveRange
 
+        /// <summary>
+        /// Возвращащает коллекцию id, при условии что элементы коллекции реализуют <see cref="IId"/>.
+        /// </summary>
+        /// <returns>Возвращает коллекцию id</returns>
         public List<int> GetId()
         {
             List<int> tmp_send = new List<int>();
 
             foreach(T model in this)
             {
-                if (model is IIdentify i)
+                if (model is IId i)
                 {
                     tmp_send.Add(i.Id);
                 }
@@ -167,7 +180,7 @@ namespace CoreWPF.Utilites
             }
 
             return tmp_send;
-        }
+        } //---метод GetId
 
         /// <summary>
         /// Инвертирует текущую коллекцию
@@ -241,6 +254,12 @@ namespace CoreWPF.Utilites
             return tmp_send.ToArray();
         } //---метод Inverse
 
+        /// <summary>
+        /// Возвращает коллекцию, соответствующую указанному условию.
+        /// </summary>
+        /// <param name="collection">Коллекция для проверки.</param>
+        /// <param name="predicate">Условие для проверки коллекции.</param>
+        /// <returns>Возвращает коллекцию, соответствующую указанному условию.</returns>
         public static T[] FindRange(IEnumerable<T> collection, Func<T, bool> predicate)
         {
             ListExt<T> tmp_send = new ListExt<T>();
@@ -254,4 +273,5 @@ namespace CoreWPF.Utilites
         }
         #endregion
     } //---класс ListExt<T>
-}
+} //---пространство имён CoreWPF.Utilites
+//---EOF
