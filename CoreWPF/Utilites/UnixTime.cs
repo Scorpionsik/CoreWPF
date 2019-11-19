@@ -3,158 +3,138 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-
 namespace CoreWPF.Utilites
 {
     /// <summary>
-    /// Реализует методы для работы с Unix Timestamp
+    /// Содержит инструменты для работы с Unix Timestamp.
     /// </summary>
     public static class UnixTime
     {
-        public static TimeZoneInfo DefaultTimeZone { get; set; }
-
-        static UnixTime()
-        {
-            DefaultTimeZone = TimeZoneInfo.Local;
-        }
-
-        private static TimeSpan GetTimeSpan(TimeZoneInfo utс)
-        {
-            if (utс == null) return UnixTime.DefaultTimeZone.BaseUtcOffset;
-            else return utс.BaseUtcOffset;
-        }
-
-        #region Возвращают DateTimeOffset
-        public static DateTimeOffset ToDateTimeOffset(double milliseconds, TimeZoneInfo utc = null)
-        {
-            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, UnixTime.GetTimeSpan(utc)).AddMilliseconds(milliseconds);
-        } //---метод ToDateTimeOffset
-        #endregion
-
-        #region Возвращают DateTime
         /// <summary>
-        /// Преобразовывает Unix Timestamp в объект класса DateTime
+        /// Разница во времени согласно текущему часовому поясу, с учётом летнего времени.
         /// </summary>
-        /// <param name="milliseconds">Принимает Unix Timestamp (в секундах)</param>
-        /// <returns>Возвращает объект класса DateTime</returns>
-        public static DateTime ToDateTime(double milliseconds, TimeZoneInfo utc = null)
+        public static TimeSpan Local
         {
-            return UnixTime.ToDateTimeOffset(milliseconds, utc).DateTime;
-        } //---метод ToDateTime
-
-        /// <summary>
-        /// Переводит строку определенного формата в <see cref="DateTime"/>
-        /// </summary>
-        /// <param name="string_time">Принимает строку в формате "%год%-%месяц%-%день%Т%часы%:%минуты%:%секунды%"</param>
-        /// <returns>Возвращает <see cref="DateTime"/> принятой строки</returns>
-        /// <exception cref="ArgumentException"/>
-        public static DateTime ToDateTime(string string_time, TimeZoneInfo utc = null)
-        {
-            try
+            get
             {
-                string date = string_time.Remove(string_time.IndexOf("T"));
-                string time = string_time;
-                if (string_time.Contains("+")) time = time.Remove(string_time.IndexOf("+"));
-                time = time.Remove(0, string_time.IndexOf("T") + 1);
-
-                DateTime tmp_send = new DateTime(
-                Convert.ToInt32(date.Split('-')[0]),
-                Convert.ToInt32(date.Split('-')[1]),
-                Convert.ToInt32(date.Split('-')[2]),
-                Convert.ToInt32(time.Split(':')[0]),
-                Convert.ToInt32(time.Split(':')[1]),
-                Convert.ToInt32(time.Split(':')[2])
-                );
-                return UnixTime.ToDateTime(UnixTime.ToUnixTimestamp(tmp_send), utc);
+                return TimeZoneInfo.Local.BaseUtcOffset;
             }
-            catch
+        } //---свойство Local
+
+        /// <summary>
+        /// Разница во времени по UTC.
+        /// </summary>
+        public static TimeSpan UTC
+        {
+            get
             {
-                throw new ArgumentException("Введённая строка имеет недопустимый формат.");
+                return new TimeSpan(0, 0, 0);
             }
-        } //---метод ToDateTime
-        #endregion
+        } //---свойство UTC
 
-        #region Возвращают строку
         /// <summary>
-        /// Преобразовывает Unix Timestamp в строчное представление времени
+        /// Вычисляет Unix Timestamp текущего времени в милисекундах; для вычисления используется смещение времени по <see cref="UTC"/>.
         /// </summary>
-        /// <param name="seconds">Принимает Unix Timestamp</param>
-        /// <returns>Возвращает строчное представление времени</returns>
-        public static string ToString(double milliseconds, TimeZoneInfo utc = null)
+        /// <returns>Возвращает Unix Timestamp (в милисекундах) текущего времени.</returns>
+        public static double CurrentUnixTimestamp()
         {
-            return UnixTime.ToDateTime(milliseconds, utc).ToString();
-        } //---метод ToString
-        #endregion
-
-        #region Возвращают Unix Timestamp
-        /// <summary>
-        /// Преобразовывает <see cref="DateTime"/> в Unix Timestamp
-        /// </summary>
-        /// <param name="date_time">>Принимает <see cref="DateTime"/></param>
-        /// <returns>Возвращает Unix Timestamp</returns>
-        public static double ToUnixTimestamp(DateTime date_time)
-        {
-            TimeSpan epochTicks = new TimeSpan(new DateTime(1970, 1, 1).Ticks);
-            TimeSpan unixTicks = new TimeSpan(date_time.Ticks) - epochTicks;
-            return unixTicks.TotalMilliseconds;
-        } //---метод ToUnixTimestamp
-
-        public static double ToUnixTimestamp(DateTimeOffset date_time)
-        {
-            return UnixTime.ToUnixTimestamp(date_time.DateTime);
-        }
-        #endregion
-
-        #region Методы для вычисления текущего времени
-        /// <summary>
-        /// Вычисляет текущее время
-        /// </summary>
-        /// <returns>Возвращает Unix Timestamp текущего времени</returns>
-        public static double CurrentUnixTimestamp(TimeZoneInfo utc = null)
-        {
-            if(utc == null) return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), UnixTime.DefaultTimeZone))).TotalMilliseconds;
-            else return (DateTime.Now.Subtract(TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1), utc))).TotalMilliseconds;
+            return Math.Round((DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds);
         } //---метод CurrentUnixTimestamp
 
         /// <summary>
-        /// Вычисляет текущее время
+        /// Вычисляет <see cref="DateTimeOffset"/> текущего времени.
         /// </summary>
-        /// <returns>Возвращает строкое представление текущего времени</returns>
-        public static string CurrentString(TimeZoneInfo utc = null)
+        /// <param name="timezone">Необходимое смещение во времени по часовому поясу.</param>
+        /// <returns>Возвращает <see cref="DateTimeOffset"/> текущего времени.</returns>
+        public static DateTimeOffset CurrentDateTimeOffset(TimeSpan timezone)
         {
-            return UnixTime.ToString(UnixTime.CurrentUnixTimestamp(), utc);
-        } //---метод CurrentString
+            return UnixTime.ToDateTimeOffset(UnixTime.CurrentUnixTimestamp(), timezone);
+        } //---метод CurrentDateTimeOffset
 
         /// <summary>
-        /// Вычисляет текущее время
+        /// Конвертирует Unix Timestamp в <see cref="DateTimeOffset"/>.
         /// </summary>
-        /// <returns>Возвращает <see cref="DateTime"/> текущего времени</returns>
-        public static DateTime CurrentDateTime(TimeZoneInfo utc = null)
+        /// <param name="unixtimestamp">Unix Timestamp в милисекундах со смещением времени по <see cref="UTC"/>.</param>
+        /// <param name="timezone">Необходимое смещение во времени по часовому поясу.</param>
+        /// <returns>Возвращает <see cref="DateTimeOffset"/> с указанным смещением во времени по часовому поясу.</returns>
+        public static DateTimeOffset ToDateTimeOffset(double unixtimestamp, TimeSpan timezone)
         {
-            return UnixTime.ToDateTime(UnixTime.CurrentUnixTimestamp(), utc);
-        }//---метод CurrentDateTime
-        #endregion
+            return new DateTimeOffset(1970, 1, 1, 0, 0, 0, timezone).AddMilliseconds(unixtimestamp + timezone.TotalMilliseconds);
+        } //---метод ToDateTimeOffset
+
+        /// <summary>
+        /// Конвертирует <see cref="DateTimeOffset"/> в Unix Timestamp.
+        /// </summary>
+        /// <param name="datetime"><see cref="DateTimeOffset"/> для работы.</param>
+        /// <returns>Возвращает Unix Timestamp в милисекундах со смещением времени по <see cref="UTC"/>.</returns>
+        public static double ToUnixTimestamp(DateTimeOffset datetime)
+        {
+            TimeSpan epochTicks = new TimeSpan(new DateTime(1970, 1, 1).Ticks);
+            TimeSpan unixTicks = new TimeSpan(datetime.UtcTicks) - epochTicks;
+            return unixTicks.TotalMilliseconds;
+        } //---метод ToUnixtimestamp
     } //---класс UnixTime
 
+    /// <summary>
+    /// Класс для двустороннего конвертирования Unix Timestamp - <see cref="string"/>; реализует <see cref="IValueConverter"/>.
+    /// </summary>
     public class UnixTimeConverter : IValueConverter
     {
+        /// <summary>
+        /// Конвертация Unix Timestamp в <see cref="string"/>; используется смещение во времени по <see cref="UnixTime.Local"/>.
+        /// </summary>
+        /// <param name="value">Unix Timestamp в формате <see cref="double"/> со смещением во времени по <see cref="UnixTime.UTC"/>.</param>
+        /// <param name="targetType">Не используется в текущем методе; можно передать null.</param>
+        /// <param name="parameter">Не используется в текущем методе; можно передать null.</param>
+        /// <param name="culture">Не используется в текущем методе; можно передать null.</param>
+        /// <returns>Возвращает соответствующую строку со смещение во времени по <see cref="UnixTime.Local"/>; если введен не <see cref="double"/>, возвращает <see cref="DependencyProperty.UnsetValue"/>.</returns>
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is double unix_stamp)
             {
-                return UnixTime.ToString(unix_stamp);
+                return UnixTime.ToDateTimeOffset(unix_stamp, UnixTime.Local).ToString();
             }
             else return DependencyProperty.UnsetValue;
-        }
+        } //---метод Convert
 
+        /// <summary>
+        /// Конвертация <see cref="string"/> в <see cref="DateTimeOffset"/>.
+        /// </summary>
+        /// <param name="value">Строка в формате: <code>год.месяц.день часы:минуты:секунды часовой:пояс</code></param>
+        /// <param name="targetType">Не используется в текущем методе; можно передать null.</param>
+        /// <param name="parameter">Не используется в текущем методе; можно передать null.</param>
+        /// <param name="culture">Не используется в текущем методе; можно передать null.</param>
+        /// <returns>Возвращает <see cref="DateTimeOffset"/>; если строка имеет неверный формат, возвращает <see cref="DependencyProperty.UnsetValue"/>.</returns>
         public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string string_time)
             {
-                return UnixTime.ToUnixTimestamp(UnixTime.ToDateTime(string_time));
+                try
+                {
+                    string date = string_time.Split(' ')[0];
+                    string time = string_time.Split(' ')[1];
+                    string tz = string_time.Split(' ')[2];
+
+                    DateTimeOffset tmp_send = new DateTimeOffset(
+                    System.Convert.ToInt32(date.Split('.')[0]),
+                    System.Convert.ToInt32(date.Split('.')[1]),
+                    System.Convert.ToInt32(date.Split('.')[2]),
+                    System.Convert.ToInt32(time.Split(':')[0]),
+                    System.Convert.ToInt32(time.Split(':')[1]),
+                    System.Convert.ToInt32(time.Split(':')[2]),
+                    new TimeSpan(System.Convert.ToInt32(tz.Split(':')[0]),
+                    System.Convert.ToInt32(tz[0] + tz.Split(':')[1]),
+                    0
+                    ));
+                    return tmp_send;
+                }
+                catch
+                {
+                    return DependencyProperty.UnsetValue;
+                }
             }
             else return DependencyProperty.UnsetValue;
-        }
-    }
+        } //---метод ConvertBack
+    } //---класс UnixTimeConverter
 } //---пространство имён CoreWPF.Utilites
 //---EOF

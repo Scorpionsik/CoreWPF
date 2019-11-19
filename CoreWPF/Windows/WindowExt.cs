@@ -21,6 +21,7 @@ namespace CoreWPF.Windows
                     vm.Event_close += new Action(this.Close);
                     vm.Event_minimized += new Action(this.WinExtMinimized);
                     vm.Event_state += new Action(this.WinExtState);
+                    vm.Dispatcher = this.Dispatcher;
                     this.VMClosed += new Func<WindowClose>(vm.CloseMethod);
                     base.DataContext = vm;
                 }

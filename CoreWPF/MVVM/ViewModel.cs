@@ -2,6 +2,7 @@
 using CoreWPF.Windows;
 using CoreWPF.Windows.Enums;
 using System;
+using System.Windows.Threading;
 
 namespace CoreWPF.MVVM
 {
@@ -11,6 +12,15 @@ namespace CoreWPF.MVVM
     [Serializable]
     public abstract class ViewModel : NotifyPropertyChanged
     {
+        private Dispatcher dispatcher;
+        public Dispatcher Dispatcher
+        {
+            set
+            {
+                this.dispatcher = value;
+            }
+        }
+
         private event Action event_close;
         public virtual Action Event_close
         {
@@ -109,6 +119,11 @@ namespace CoreWPF.MVVM
                     this.Event_save?.Invoke();
                 });
             }
+        }
+
+        public void InvokeInMainThread(Action action)
+        {
+            this.dispatcher.Invoke(action);
         }
     }
 

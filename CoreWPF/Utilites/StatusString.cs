@@ -37,7 +37,7 @@ namespace CoreWPF.Utilites
 
         private string status;
         /// <summary>
-        /// Строка для отображения статуса
+        /// Строка для отображения статуса.
         /// </summary>
         public string Status
         {
@@ -50,9 +50,9 @@ namespace CoreWPF.Utilites
         } //---свойство Status
 
         /// <summary>
-        /// Метод для установки текста
+        /// Метод для установки текста.
         /// </summary>
-        /// <param name="status">Текст для отображения</param>
+        /// <param name="status">Текст для отображения.</param>
         /// <param name="milliseconds">Интервал отображения текста; можно использовать константы <see cref="LongTime"/>, <see cref="ShortTime"/> и <see cref="Infinite"/>.</param>
         public async void SetAsync(string status, double milliseconds)
         {
@@ -68,7 +68,7 @@ namespace CoreWPF.Utilites
         } //---метод SetAsync
 
         /// <summary>
-        /// Метод для стирания текста
+        /// Метод для стирания текста.
         /// </summary>
         public async void ClearAsync()
         {
