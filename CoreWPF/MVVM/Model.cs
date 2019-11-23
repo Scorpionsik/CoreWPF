@@ -17,14 +17,18 @@ namespace CoreWPF.MVVM
         [field: NonSerialized]
         private event Action<Model> event_select_model;
         /// <summary>
-        /// Ссылка на событие выбора данной модели
+        /// Cобытие выбора данной модели
         /// </summary>
-        public Action<Model> Event_select_model
+        public event Action<Model> Event_select_model
         {
-            get { return this.event_select_model; }
-            set
+            add
             {
-                this.event_select_model = value;
+                this.event_select_model -= value;
+                this.event_select_model += value;
+            }
+            remove
+            {
+                this.event_select_model -= value;
             }
         } //---свойство Event_select_model
 
