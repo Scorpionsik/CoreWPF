@@ -145,6 +145,16 @@ namespace CoreWPF.Utilites.Navigation
             navigationAware.OnNavigatingTo(arg);
         }
 
+        public object this[string navigationKey]
+        {
+            get
+            {
+                if (!this.Keys.Contains(navigationKey)) throw new ArgumentException("Ключ не найден!", "navigationKey");
+
+                return _viewModelsByNavigationKey[navigationKey];
+            }
+        }
+
         public string GetSubtitle(string navigationKey)
         {
             if (!this.Keys.Contains(navigationKey)) throw new ArgumentException("Ключ не найден!", "navigationKey");

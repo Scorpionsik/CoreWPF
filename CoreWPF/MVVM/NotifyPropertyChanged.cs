@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessagePack;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -8,6 +9,7 @@ namespace CoreWPF.MVVM
     /// Реализует интерфейс <see cref="INotifyPropertyChanged"/>
     /// </summary>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public abstract class NotifyPropertyChanged : INotifyPropertyChanged
     {
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MessagePack;
+using System;
 using System.Windows.Input;
 
 namespace CoreWPF.Utilites
@@ -7,6 +8,7 @@ namespace CoreWPF.Utilites
     /// Класс, реализующий интерфейс <see cref="ICommand"/>; определяет команду, принимающей в качестве параметра <see cref="object"/>
     /// </summary>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public class RelayCommand : ICommand
     {
         /// <summary>
@@ -27,6 +29,9 @@ namespace CoreWPF.Utilites
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         } //---свойство CanExecuteChanged
+
+        [SerializationConstructor]
+        public RelayCommand() { }
 
         /// <summary>
         /// Конструктор инициализации команды

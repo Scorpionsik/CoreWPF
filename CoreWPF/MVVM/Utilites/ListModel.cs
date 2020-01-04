@@ -1,5 +1,6 @@
 ﻿using CoreWPF.MVVM.Interfaces;
 using CoreWPF.Utilites;
+using MessagePack;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,13 @@ namespace CoreWPF.MVVM.Utilites
     /// </summary>
     /// <typeparam name="T">Должен наследоваться от <see cref="IModel"/></typeparam>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public class ListModel<T> : ListExt<T> where T : IModel
     {
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ListModel{T}"/>.
         /// </summary>
+        [SerializationConstructor]
         public ListModel() : base() { }
 
         /// <summary>

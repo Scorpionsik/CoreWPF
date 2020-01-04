@@ -1,4 +1,5 @@
 ﻿using CoreWPF.Utilites;
+using MessagePack;
 using System;
 using System.Linq;
 
@@ -8,6 +9,7 @@ namespace CoreWPF.MVVM
     /// Предоставляет базовый функционал для модели приложения; наследуется от <see cref="NotifyPropertyChanged"/>.
     /// </summary>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public abstract class Model : NotifyPropertyChanged
     {
         #region Поля и свойства

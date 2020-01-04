@@ -1,7 +1,10 @@
 ﻿using CoreWPF.Interfaces;
+using MessagePack;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+//using System.Collections.Specialized;
+//using System.ComponentModel;
 using System.Linq;
 
 namespace CoreWPF.Utilites
@@ -11,13 +14,14 @@ namespace CoreWPF.Utilites
     /// </summary>
     /// <typeparam name="T">Принимает любой <see cref="object"/></typeparam>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public class ListExt<T> : ObservableCollection<T>
     {
         #region Свойства
         /// <summary>
         /// Возвращает первый элемент последовательности
         /// </summary>
-        public T FirstElement
+        public T First
         {
             get
             {
@@ -28,7 +32,7 @@ namespace CoreWPF.Utilites
         /// <summary>
         /// Возвращает последний элемент последовательности
         /// </summary>
-        public T LastElement
+        public T Last
         {
             get
             {
@@ -41,6 +45,7 @@ namespace CoreWPF.Utilites
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="ListExt{T}"/>.
         /// </summary>
+        [SerializationConstructor]
         public ListExt() : base()
         {
             //For Async ListExt
@@ -232,8 +237,7 @@ namespace CoreWPF.Utilites
         {
             // We are in the creator thread, call the base implementation directly
             base.OnPropertyChanged((PropertyChangedEventArgs)param);
-        }
-        */
+        }*/
         #endregion
 
         #region Статические методы

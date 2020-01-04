@@ -1,4 +1,5 @@
 ﻿using CoreWPF.MVVM;
+using MessagePack;
 using System;
 using System.ComponentModel;
 using System.Threading;
@@ -13,6 +14,7 @@ namespace CoreWPF.Utilites
     /// Удобно использовать в качестве статус-бара окна.
     /// </remarks>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public class StatusString : NotifyPropertyChanged
     {
         /// <summary>

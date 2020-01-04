@@ -7,6 +7,7 @@ namespace CoreWPF.Windows
 {
     public partial class WindowExt : Window
     {
+        private event Action VMContentRendered;
         private event Func<WindowClose> VMClosed;
         /// <summary>
         /// Получает или задает контекст данных для элемента, участвующего в привязке данных.
@@ -23,6 +24,7 @@ namespace CoreWPF.Windows
                     vm.Event_state += new Action(this.WinExtState);
                     vm.Dispatcher = this.Dispatcher;
                     this.VMClosed += new Func<WindowClose>(vm.CloseMethod);
+                    this.VMContentRendered += new Action(vm.ContentRenderedMethod);
                     base.DataContext = vm;
                 }
                 else base.DataContext = value;
@@ -35,6 +37,12 @@ namespace CoreWPF.Windows
         public WindowExt() : base()
         {
             this.Closing += new System.ComponentModel.CancelEventHandler(this.ClosingMethod);
+            this.ContentRendered += new EventHandler(this.ContentRenderedMethod);
+        }
+
+        private void ContentRenderedMethod(object sender, EventArgs e)
+        {
+            this.VMContentRendered?.Invoke();
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using CoreWPF.Utilites;
 using CoreWPF.Windows;
 using CoreWPF.Windows.Enums;
+using MessagePack;
 using System;
 using System.Windows;
 using System.Windows.Threading;
@@ -11,6 +12,7 @@ namespace CoreWPF.MVVM
     /// Класс, который автоматически привязывается к событиям <see cref="WindowExt"/>
     /// </summary>
     [Serializable]
+    [MessagePackObject(keyAsPropertyName: true)]
     public abstract class ViewModel : NotifyPropertyChanged
     {
         private Dispatcher dispatcher;
@@ -79,6 +81,8 @@ namespace CoreWPF.MVVM
             }
         } //---метод Title
 
+        public virtual void ContentRenderedMethod() { }
+
         /// <summary>
         /// Метод вызывается после срабатывания события <see cref="Window.Closing"/>. Позволяет предотвратить закрытие окна.
         /// </summary>
@@ -110,6 +114,8 @@ namespace CoreWPF.MVVM
                 });
             }
         } //---команда Command_close
+
+        
 
         /// <summary>
         /// Команда для вызова события сворачивания окна.
