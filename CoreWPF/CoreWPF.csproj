@@ -73,6 +73,7 @@
     <Compile Include="MVVM\Utilites\ListModel.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilites\Crypt.cs" />
     <Compile Include="Utilites\IgnoreMouseWheelBehavior.cs" />
     <Compile Include="Utilites\ListExt.cs" />
     <Compile Include="Utilites\Navigation\Interfaces\INavigateModule.cs" />
