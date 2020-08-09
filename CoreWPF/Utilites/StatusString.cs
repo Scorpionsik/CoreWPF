@@ -56,7 +56,7 @@ namespace CoreWPF.Utilites
         /// </summary>
         /// <param name="status">Текст для отображения.</param>
         /// <param name="milliseconds">Интервал отображения текста; можно использовать константы <see cref="LongTime"/>, <see cref="ShortTime"/> и <see cref="Infinite"/>.</param>
-        public async void SetAsync(string status, double milliseconds)
+        public async Task SetAsync(string status, double milliseconds)
         {
             await Task.Run(() =>
             {
@@ -69,16 +69,32 @@ namespace CoreWPF.Utilites
             });
         } //---метод SetAsync
 
+        public void Set(string status, double milliseconds)
+        {
+            this.ClearTimer();
+            this.Status = status;
+            if (milliseconds > 0)
+            {
+                this.SingleTimer = new Timer(new TimerCallback(this.Clear), null, (int)milliseconds, Timeout.Infinite);
+            }
+        } //---метод SetAsync
+
         /// <summary>
         /// Метод для стирания текста.
         /// </summary>
-        public async void ClearAsync()
+        public async Task ClearAsync()
         {
             await Task.Run(() =>
             {
                 this.ClearTimer();
                 this.Status = "";
             });
+        } //---метод ClearAsync
+
+        public void Clear()
+        {
+            this.ClearTimer();
+            this.Status = "";
         } //---метод ClearAsync
 
         /// <summary>
