@@ -17,7 +17,7 @@ namespace CoreWPF.Utilites
         {
             get
             {
-                return TimeZoneInfo.Local.BaseUtcOffset;
+                return TimeZoneInfo.Local.BaseUtcOffset.Add(TimeZoneInfo.Local.IsDaylightSavingTime(DateTimeOffset.Now) ? new TimeSpan(1, 0, 0) : new TimeSpan(0, 0, 0));
             }
         } //---свойство Local
 
