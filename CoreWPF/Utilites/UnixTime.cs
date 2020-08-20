@@ -73,6 +73,11 @@ namespace CoreWPF.Utilites
             TimeSpan unixTicks = new TimeSpan(datetime.UtcTicks) - epochTicks;
             return unixTicks.TotalMilliseconds;
         } //---метод ToUnixtimestamp
+
+        public static double GetMilliseconds(int countValue, TimeValues typeValue)
+        {
+            return Convert.ToDouble(countValue * (int)typeValue * 1000);
+        }
     } //---класс UnixTime
 
     /// <summary>
