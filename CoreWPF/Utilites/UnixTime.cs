@@ -17,7 +17,7 @@ namespace CoreWPF.Utilites
         {
             get
             {
-                return TimeZoneInfo.Local.BaseUtcOffset;
+                return TimeZoneInfo.Local.BaseUtcOffset.Add(TimeZoneInfo.Local.IsDaylightSavingTime(DateTimeOffset.Now) ? new TimeSpan(1, 0, 0) : new TimeSpan(0, 0, 0));
             }
         } //---свойство Local
 
@@ -73,6 +73,11 @@ namespace CoreWPF.Utilites
             TimeSpan unixTicks = new TimeSpan(datetime.UtcTicks) - epochTicks;
             return unixTicks.TotalMilliseconds;
         } //---метод ToUnixtimestamp
+
+        public static double GetMilliseconds(int countValue, TimeValues typeValue)
+        {
+            return Convert.ToDouble(countValue * (int)typeValue * 1000);
+        }
     } //---класс UnixTime
 
     /// <summary>
