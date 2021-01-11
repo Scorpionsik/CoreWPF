@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoreWPF.Utilites
+namespace CoreWPF.Utilites.Enums
 {
     public enum TimeValues
     {
