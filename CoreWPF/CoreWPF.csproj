@@ -83,6 +83,7 @@
     <Compile Include="Utilites\Navigation\NavigationViewModel.cs" />
     <Compile Include="Utilites\RelayCommand.cs" />
     <Compile Include="Utilites\StatusString.cs" />
+    <Compile Include="Utilites\TaskWorker.cs" />
     <Compile Include="Utilites\UnixTime.cs" />
     <Compile Include="Utilites\VisibilityBoolConverter.cs" />
     <Compile Include="Windows\DialogWindowExt.cs" />
