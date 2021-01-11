@@ -74,6 +74,7 @@
     <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilites\Crypt.cs" />
+    <Compile Include="Utilites\Enums\TaskWorkerStatus.cs" />
     <Compile Include="Utilites\IgnoreMouseWheelBehavior.cs" />
     <Compile Include="Utilites\ListExt.cs" />
     <Compile Include="Utilites\Navigation\Interfaces\INavigateModule.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Utilites\Navigation\NavigationViewModel.cs" />
     <Compile Include="Utilites\RelayCommand.cs" />
     <Compile Include="Utilites\StatusString.cs" />
+    <Compile Include="Utilites\TaskWorker.cs" />
     <Compile Include="Utilites\UnixTime.cs" />
     <Compile Include="Utilites\VisibilityBoolConverter.cs" />
     <Compile Include="Windows\DialogWindowExt.cs" />
