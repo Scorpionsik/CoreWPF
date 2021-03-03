@@ -160,7 +160,7 @@ namespace CoreWPF.Utilites
         /// Отменяет работу потоков и пишет ошибку
         /// </summary>
         /// <param name="ex">Ошибка для записи</param>
-        protected void SetError(Exception ex)
+        private void SetError(Exception ex)
         {
             this.Cancel_source.Cancel();
             this.Status = TaskWorkerStatus.Error;
