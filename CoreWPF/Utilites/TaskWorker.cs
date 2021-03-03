@@ -50,6 +50,17 @@ namespace CoreWPF.Utilites
             remove => this.event_Error -= value; 
         }
 
+        private event Action event_Start;
+        public event Action Event_Start
+        {
+            add
+            {
+                this.event_Start -= value;
+                this.event_Start += value;
+            }
+            remove => this.event_Cancel -= value;
+        }
+
         private event Action event_Cancel;
         public event Action Event_Cancel
         {
@@ -174,6 +185,7 @@ namespace CoreWPF.Utilites
         private async void DoAsync(CancellationToken cancel)
         {
             this.Status = TaskWorkerStatus.InWork;
+            this.event_Start?.Invoke();
             while (Test_list.Count > 0 && !cancel.IsCancellationRequested)
             {
                 T value = this.Test_list.First;
