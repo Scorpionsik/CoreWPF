@@ -162,9 +162,9 @@ namespace CoreWPF.Utilites
         /// </summary>
         protected void Cancel()
         {
+            this.event_Cancel?.Invoke();
             this.Cancel_source.Cancel();
             this.Status = this.Status != TaskWorkerStatus.Complete && this.Status != TaskWorkerStatus.Ready ? TaskWorkerStatus.Cancel : TaskWorkerStatus.Ready;
-            this.event_Cancel?.Invoke();
         }
 
         /// <summary>
@@ -173,9 +173,9 @@ namespace CoreWPF.Utilites
         /// <param name="ex">Ошибка для записи</param>
         private void SetError(Exception ex)
         {
+            this.event_Error?.Invoke(ex);
             this.Cancel_source.Cancel();
             this.Status = TaskWorkerStatus.Error;
-            this.event_Error?.Invoke(ex);
         }
 
         /// <summary>
@@ -184,8 +184,9 @@ namespace CoreWPF.Utilites
         /// <param name="cancel">Токен для отмены выполнения потоков</param>
         private async void DoAsync(CancellationToken cancel)
         {
-            this.Status = TaskWorkerStatus.InWork;
             this.event_Start?.Invoke();
+            this.Status = TaskWorkerStatus.InWork;
+            
             while (Test_list.Count > 0 && !cancel.IsCancellationRequested)
             {
                 T value = this.Test_list.First;
@@ -194,8 +195,8 @@ namespace CoreWPF.Utilites
             }
             if (this.Status != TaskWorkerStatus.Cancel && this.Status != TaskWorkerStatus.Error)
             {
-                this.Status = TaskWorkerStatus.Complete;
                 this.event_Finish?.Invoke();
+                this.Status = TaskWorkerStatus.Complete;
             }
         }
 
