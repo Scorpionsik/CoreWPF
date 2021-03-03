@@ -24,7 +24,7 @@ namespace CoreWPF.Utilites
                 this.OnPropertyChanged("Status");
             }
         }
-
+        /*
         private Exception error;
         /// <summary>
         /// Ошибка во время выполнения потоков
@@ -37,6 +37,39 @@ namespace CoreWPF.Utilites
                 this.error = value;
                 this.OnPropertyChanged("Error");
             }
+        }*/
+
+        private event Action<Exception> event_Error;
+        public event Action<Exception> Event_Error
+        {
+            add
+            {
+                this.event_Error -= value;
+                this.event_Error += value;
+            }
+            remove => this.event_Error -= value; 
+        }
+
+        private event Action event_Cancel;
+        public event Action Event_Cancel
+        {
+            add
+            {
+                this.event_Cancel -= value;
+                this.event_Cancel += value;
+            }
+            remove => this.event_Cancel -= value;
+        }
+
+        private event Action event_Finish;
+        public event Action Event_Finish
+        {
+            add
+            {
+                this.event_Finish -= value;
+                this.event_Finish += value;
+            }
+            remove => this.event_Finish -= value;
         }
 
         /// <summary>
@@ -64,7 +97,6 @@ namespace CoreWPF.Utilites
 
         public TaskWorker() : base()
         {
-            this.Error = null;
             this.Status = TaskWorkerStatus.Ready;
             this.Test_list = new ListExt<T>();
         }
@@ -107,7 +139,6 @@ namespace CoreWPF.Utilites
             bool check = this.CheckValidStart();
             if (check)
             {
-                this.Error = null;
                 this.Cancel_source = new CancellationTokenSource();
                 this.DoAsync(this.Cancel_source.Token);
             }
@@ -121,6 +152,7 @@ namespace CoreWPF.Utilites
         {
             this.Cancel_source.Cancel();
             this.Status = this.Status != TaskWorkerStatus.Complete && this.Status != TaskWorkerStatus.Ready ? TaskWorkerStatus.Cancel : TaskWorkerStatus.Ready;
+            this.event_Cancel?.Invoke();
         }
 
         /// <summary>
@@ -130,8 +162,8 @@ namespace CoreWPF.Utilites
         protected void SetError(Exception ex)
         {
             this.Cancel_source.Cancel();
-            this.Error = ex;
             this.Status = TaskWorkerStatus.Error;
+            this.event_Error?.Invoke(ex);
         }
 
         /// <summary>
@@ -147,7 +179,11 @@ namespace CoreWPF.Utilites
                 await Task.Run(() => this.Run(value, cancel), cancel);
                 if (!cancel.IsCancellationRequested) this.Test_list.Remove(value);
             }
-            if (this.Status != TaskWorkerStatus.Cancel && this.Status != TaskWorkerStatus.Error) this.Status = TaskWorkerStatus.Complete;
+            if (this.Status != TaskWorkerStatus.Cancel && this.Status != TaskWorkerStatus.Error)
+            {
+                this.Status = TaskWorkerStatus.Complete;
+                this.event_Finish?.Invoke();
+            }
         }
 
         /// <summary>
