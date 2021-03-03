@@ -2,6 +2,7 @@
 using CoreWPF.Utilites.Enums;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -111,8 +112,9 @@ namespace CoreWPF.Utilites
             this.Status = TaskWorkerStatus.Ready;
             this.Test_list = new ListExt<T>();
             this.Event_Error += this.ErrorHandling;
+            this.Test_list.CollectionChanged += this.CollectionChanged;
         }
-
+        /*
         /// <summary>
         /// Добавляет один элемент в нашу коллекцию и запускает выполнение потоков
         /// </summary>
@@ -132,7 +134,7 @@ namespace CoreWPF.Utilites
             Test_list.AddRange(values);
             this.Start();
         }
-
+        */
         /// <summary>
         /// Проверяет, можно ли запустить потоки
         /// </summary>
@@ -218,6 +220,11 @@ namespace CoreWPF.Utilites
             {
                 this.SetError(ex);
             }
+        }
+
+        private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+           if(e.Action != NotifyCollectionChangedAction.Remove) this.Start();
         }
 
         protected abstract void RunMethod(T value, CancellationToken cancel);
