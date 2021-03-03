@@ -99,6 +99,7 @@ namespace CoreWPF.Utilites
         {
             this.Status = TaskWorkerStatus.Ready;
             this.Test_list = new ListExt<T>();
+            this.Event_Error += this.ErrorHandling;
         }
 
         /// <summary>
@@ -207,5 +208,6 @@ namespace CoreWPF.Utilites
         }
 
         protected abstract void RunMethod(T value, CancellationToken cancel);
+        protected abstract void ErrorHandling(Exception ex);
     }
 }
